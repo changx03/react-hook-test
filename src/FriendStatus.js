@@ -74,7 +74,7 @@ export function FriendStatusHook(props) {
       // cleanup func doesn't have to return a named function
       ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
     };
-  }, [props.friend.id]); // Only re-subscribe if props.friend.id changes
+  }, [props.friend.id]); // list of dependencies. Only re-subscribe if props.friend.id changes
 
   if (isOnline == null) {
     return <span>Loading...</span>;
