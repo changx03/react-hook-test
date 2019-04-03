@@ -1,25 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Example from "./BasicExample";
+import { FriendStatus, FriendStatusHook } from "./FriendStatus";
 
 class App extends Component {
+  state = {
+    id: 101
+  };
   render() {
+    const { id } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+        <Example />
+        <div>
+          <FriendStatus friend={{ id: id }} />
+          <br />
+          <FriendStatusHook friend={{ id: id }} />
+        </div>
+        <div>
+          <button
+            onClick={() => {
+              this.setState(
+                state => ({ id: state.id + 1 }),
+                () => {
+                  console.log(this.state.id);
+                }
+              );
+            }}
           >
-            Learn React
-          </a>
-        </header>
+            Next user
+          </button>
+        </div>
       </div>
     );
   }
