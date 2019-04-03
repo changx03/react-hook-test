@@ -4,7 +4,7 @@ const ChatAPI = {
   subscribeToFriendStatus: (id, handler) => {
     handler({ isOnline: null });
     window.setTimeout(function() {
-      const isOnline = Math.random() > 0.5;
+      const isOnline = id % 2 === 0 // even id goes offline
       handler({ isOnline });
     }, 1000);
   },
@@ -70,11 +70,11 @@ export function FriendStatusHook(props) {
 
     ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
     // specify how to clean up after this effect
-    return function() {
+    return () => {
       // cleanup func doesn't have to return a named function
       ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
     };
-  }, [isOnline]);
+  }, [props.friend.id]); // Only re-subscribe if props.friend.id changes
 
   if (isOnline == null) {
     return <span>Loading...</span>;
