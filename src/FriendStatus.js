@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-const ChatAPI = {
-  subscribeToFriendStatus: (id, handler) => {
-    handler({ isOnline: null });
-    window.setTimeout(function() {
-      const isOnline = id % 2 === 0 // even id goes offline
-      handler({ isOnline });
-    }, 1000);
-  },
-  unsubscribeFromFriendStatus: (id, handler) => {
-    window.setTimeout(function() {
-      handler({ isOnline: null });
-    }, 1000);
-  }
-};
+import { ChatAPI } from "./ChatAPI";
 
 export class FriendStatus extends React.Component {
   state = { isOnline: null };
@@ -63,6 +49,7 @@ export class FriendStatus extends React.Component {
 // the React hook version
 export function FriendStatusHook(props) {
   const [isOnline, setIsOnline] = useState(null);
+  
   useEffect(() => {
     function handleStatusChange(status) {
       setIsOnline(status.isOnline);
